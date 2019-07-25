@@ -6,7 +6,8 @@
 
 @section('content-heading')
   Product Manage
- 
+ <hr>
+  <h3 style="color:blue";> {{Session::get('message')}} </h3> 
 @endsection
 
 @section('mainContent')
@@ -21,12 +22,12 @@
                                   <tr>
                                   <th>SI</th>
                                     <th>Name</th>
-                                     <th>Category Name</th>
+                                    <th>Category Name</th>
                                     <th>Price</th>
                                     <th>Picture</th>
                                     <th>qty</th>
                                     <th>Publication Status</th>
-                                      <th>Action</th>
+                                    <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,10 +39,10 @@
                                       <td>{{ $product->price}} </td>
                                       <td>{{ $product->qty}} </td>
                                       <td><img src="{{asset ($product->picture )}}" width="60px>" alt="no pic" ></td>
-                                      <td>{{ ($product->publicationStatus ==1)? 'published' : 'Unpublished'}} </td>
-                                       <td><a {{}} href="" target="__blank"> view </a> |Edit | Delete</td>
+                                    <td>{{ ($product->publicationStatus ==1)? 'published' : 'Unpublished'}} </td>
+                                   <td><a  href="{{ url ('/product/view/'.$product->id)}}" target="__blank"> view </a> | <a  href="{{ url ('/product/edit/'. $product->id)}}" target="__blank"> Edit </a> | Delete</td>
 
-                                	 </tr>
+                                	  </tr>
                                 	 @endforeach
                                 </tbody>
                             </table>

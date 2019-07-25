@@ -52,8 +52,61 @@ class ProductController extends Controller
     	$products = DB::table('pictures')
          ->join('mains','mains.id','=','categoryID')
          ->select('pictures.*','mains.categoryName as catName')
+         ->orderBy('pictures.id','asc')
          ->paginate(6);
 
     	return view('admin.product.productManage',['products'=>$products]);
     }
+
+    public function singleProduct($id)
+        {
+         
+         echo "$id";
+         $productById = DB::table('pictures')
+         ->join('mains','mains.id', '=','categoryID')
+         ->select('pictures.*', 'mains.categoryName as catName')
+         ->where('pictures.id',$id)
+         ->first();
+
+         return view('admin.product.singleProduct',['product'=>$productById]);
+
+        } 
+
+        public function editProduct($id){       
+        
+          $product = Picture::where('id',$id)->first();
+          $category = Main::where('publicationStatus',1)->get();
+         
+         return view('admin.product.productEdit', ['product'=> $product,'categories'=>$category]);
+        }
+       
+
+       public function updateProduct(Request $request){
+
+      
+
+        $productPic = Picture::where('id',$request->product_id)->first();
+         
+
+     $picInfo = $request->file('pic');
+     $picName = $request->product_id.$picInfo->getClientOriginalName();
+    $path = "productImage/";
+    $picUrl = $path.$picName;
+    $picInfo->move($path,$picName);
+    
+    $product = picture::find($request->product_id);
+
+    $product->productName = $request->name;
+    $product->categoryID = $request->categoryID;
+    $product->price = $request->price;
+    $product->qty = $request->qty;
+    $product->shortDescription = $request->Shortdescription;
+    $product->longDescription = $request->longDescription;
+    $product->publicationStatus = $request->publicationStatus;
+    $product->picture = $picUrl;
+
+    $product->save();
+       return redirect('/product/manage')->with('message','Product Update Successfully');
+   }
+
 }

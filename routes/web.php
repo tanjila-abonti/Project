@@ -35,3 +35,6 @@ Route::get ('/delete/{id}','CategoryController@delete');
 Route::get('/product/entry','ProductController@index');
 Route::post('/product/entry','ProductController@save');
 Route::get('/product/manage','ProductController@manage');
+Route::get('/product/view/{id}','ProductController@singleProduct');
+Route::get('/product/edit/{id}','ProductController@editProduct');
+Route::post('/product/edit','ProductController@updateProduct');

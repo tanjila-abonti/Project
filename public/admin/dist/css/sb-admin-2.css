@@ -23,9 +23,9 @@ a {
   text-decoration: none;
 }
 
-.panel-body a{
+ .panel-body a{
   color:green;
-}
+} 
 
 .nav > li > a:focus, .nav > li > a:hover {
   background-color: #fff;
